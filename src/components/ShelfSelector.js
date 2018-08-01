@@ -1,11 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class CategorySelector extends Component {
-
-  render() {
+const ShelfSelector = (props) => {
     return (
       <div className="category-selector">
-        <select>
+        <select onChange={(e) => {
+          const { book, changeShelf } = props;
+
+          changeShelf(book, e.target.value);
+        }}>
           <option disabled>Move to...</option>
           <option>Currently Reading</option>
           <option>Want to Read</option>
@@ -14,8 +16,6 @@ class CategorySelector extends Component {
         </select>
       </div>
     );
-  }
-
 }
 
-export default CategorySelector;
+export default ShelfSelector;

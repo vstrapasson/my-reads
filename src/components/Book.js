@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import CategorySelector from './CategorySelector';
+import ShelfSelector from './ShelfSelector';
 
 class Book extends Component {
 
@@ -15,7 +15,7 @@ class Book extends Component {
             <div className="book-title">{book.title}</div>
             <div className="book-author"></div>
           </div>
-          <CategorySelector />
+          <ShelfSelector book={book} changeShelf={this.props.changeShelf} />
         </div>
       </li>
     );

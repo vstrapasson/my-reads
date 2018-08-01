@@ -18,6 +18,11 @@ header {
   padding: 18px 0;
 }
 
+.shelf h2 {
+  text-align: left;
+  margin-left: 20px;
+}
+
 .book-list {
   display: flex;
   flex-wrap: wrap;

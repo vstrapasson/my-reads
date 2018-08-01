@@ -21,6 +21,10 @@ class App extends Component {
       });
   }
 
+  changeShelf(book, shelf) {
+    console.log(book, shelf);
+  }
+
   render() {
 
     if (this.state.loading) {
@@ -32,9 +36,9 @@ class App extends Component {
     return (
       <div className="App">
         <Header />
-        <ListBooks shelfName="Currently Reading" books={books.currentlyReading} />
-        <ListBooks shelfName="Read" books={books.read} />
-        <ListBooks shelfName="Want to Read" books={books.wantToRead} />
+        <ListBooks shelfName="Currently Reading" books={books.currentlyReading} changeShelf={this.changeShelf}/>
+        <ListBooks shelfName="Read" books={books.read} changeShelf={this.changeShelf} />
+        <ListBooks shelfName="Want to Read" books={books.wantToRead} changeShelf={this.changeShelf} />
       </div>
     );
   }
