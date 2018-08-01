@@ -1,6 +1,10 @@
-body, ul {
+body, ul, header, h1 {
   margin: 0;
   padding: 0;
+}
+
+body {
+  top: 0;
   font-family: sans-serif;
 }
 
@@ -8,18 +12,23 @@ li {
   list-style: none;
 }
 
+header {
+  width: 100%;
+  background-color: #64eaba;
+  padding: 18px 0;
+}
+
 .book-list {
   display: flex;
   flex-wrap: wrap;
+  margin-top: 30px;
 }
 
 .book {
-  margin: 10px;
+  margin: 10px 30px;
   height: 250px;
   display: flex;
-  flex-grow: 1;
-  flex-basis: 200px;
-  justify-content: space-around;
+  flex-basis: auto;
   align-items: flex-end;
 }
 
@@ -29,4 +38,5 @@ li {
 
 .book-info {
   height: 50px;
+  width: 200px;
 }

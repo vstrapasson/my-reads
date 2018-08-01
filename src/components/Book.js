@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import CategorySelector from './CategorySelector';
+
 class Book extends Component {
 
   render() {
@@ -13,6 +15,7 @@ class Book extends Component {
             <div className="book-title">{book.title}</div>
             <div className="book-author"></div>
           </div>
+          <CategorySelector />
         </div>
       </li>
     );

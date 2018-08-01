@@ -1,34 +1,19 @@
 import React, { Component } from 'react';
 
 import Book from './Book';
-import * as API from '../utils/BooksAPI';
 
-class ListBooks extends Component {
-
-  state = {
-    books: [],
-    loading: true
-  }
-
-  componentDidMount() {
-    API.getAll().then(books => {
-      this.setState({books, loading: false});
-    });
-  }
-
-  render() {
-    if (this.state.loading) {
-      return (<h1>Loading...</h1>)
-    }
-
-    return (
+const ListBooks = (props) => {
+  return (
+    <div>
+      <h2>{props.shelfName}</h2>
+      <hr />
       <ul className="book-list">
-        {this.state.books.map(book => {
+        {props.books.map(book => {
           return <Book key={book.title} book={book} />
         })}
       </ul>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default ListBooks;
