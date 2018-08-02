@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import _ from 'lodash';
+
 import './App.css';
 
-import ListBooks from './components/ListBooks';
-import Header from './components/Header';
+
+import Home from './components/Home';
+import Search from './components/Search';
 
 import * as API from './utils/BooksAPI';
 
@@ -22,9 +25,6 @@ class App extends Component {
   }
 
   onChangeShelf(book, shelf) {
-
-    console.log(this.state);
-
     book.shelf = shelf;
     this.setState((state) => {
         state.books[book.id] = book;
@@ -34,22 +34,27 @@ class App extends Component {
     API.update(book, shelf).then(res => console.log(res));
   }
 
+  searchForBooks(query) {
+    API.search(query).then(books => {
+        books = _.keyBy(books, 'id');
+        this.setState({books, loading: false});
+    })
+  }
+
   render() {
-
-    if (this.state.loading) {
-        return <p>Loading...</p>
-    }
-
-    let { books } = this.state;
-
-    books = _.groupBy(books, 'shelf');
-
     return (
       <div className="App">
-        <Header />
-        <ListBooks shelfName="Currently Reading" books={books.currentlyReading} onChangeShelf={this.onChangeShelf.bind(this)}/>
-        <ListBooks shelfName="Read" books={books.read} onChangeShelf={this.onChangeShelf.bind(this)} />
-        <ListBooks shelfName="Want to Read" books={books.wantToRead} onChangeShelf={this.onChangeShelf.bind(this)} />
+        <Router>
+          <Switch>
+            <Route exact path="/" component={() => (
+                <Home books={this.state.books} onChangeShelf={this.onChangeShelf.bind(this)} />
+              )} />
+            <Route path="/search" component={() => (
+                <Search searchForBooks={this.searchForBooks.bind(this)} />
+              )} />
+          </Switch>
+        </Router>
+
       </div>
     );
   }
