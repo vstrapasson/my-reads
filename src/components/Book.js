@@ -15,7 +15,7 @@ class Book extends Component {
             <div className="book-title">{book.title}</div>
             <div className="book-author"></div>
           </div>
-          <ShelfSelector book={book} changeShelf={this.props.changeShelf} />
+          <ShelfSelector book={book} onChangeShelf={this.props.onChangeShelf} />
         </div>
       </li>
     );

@@ -16,13 +16,22 @@ class App extends Component {
 
   componentDidMount() {
       API.getAll().then(books => {
-          books = _.groupBy(books, 'shelf');
+          books = _.keyBy(books, 'id');
           this.setState({books, loading: false});
       });
   }
 
-  changeShelf(book, shelf) {
-    console.log(book, shelf);
+  onChangeShelf(book, shelf) {
+
+    console.log(this.state);
+
+    book.shelf = shelf;
+    this.setState((state) => {
+        state.books[book.id] = book;
+        return state;
+    });
+
+    API.update(book, shelf).then(res => console.log(res));
   }
 
   render() {
@@ -31,14 +40,16 @@ class App extends Component {
         return <p>Loading...</p>
     }
 
-    const { books } = this.state;
+    let { books } = this.state;
+
+    books = _.groupBy(books, 'shelf');
 
     return (
       <div className="App">
         <Header />
-        <ListBooks shelfName="Currently Reading" books={books.currentlyReading} changeShelf={this.changeShelf}/>
-        <ListBooks shelfName="Read" books={books.read} changeShelf={this.changeShelf} />
-        <ListBooks shelfName="Want to Read" books={books.wantToRead} changeShelf={this.changeShelf} />
+        <ListBooks shelfName="Currently Reading" books={books.currentlyReading} onChangeShelf={this.onChangeShelf.bind(this)}/>
+        <ListBooks shelfName="Read" books={books.read} onChangeShelf={this.onChangeShelf.bind(this)} />
+        <ListBooks shelfName="Want to Read" books={books.wantToRead} onChangeShelf={this.onChangeShelf.bind(this)} />
       </div>
     );
   }

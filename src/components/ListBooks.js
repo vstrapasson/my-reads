@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import Book from './Book';
 
@@ -8,10 +8,10 @@ const ListBooks = (props) => {
       <h2>{props.shelfName}</h2>
       <hr />
       <ul className="book-list">
-        {props.books.map(book => {
-          return <Book key={book.title} book={book} changeShelf={props.changeShelf}/>
+        {props.books && props.books.map(book => {
+          return <Book key={book.title} book={book} onChangeShelf={props.onChangeShelf}/>
         })}
-      </ul>
+      </ul> 
     </div>
   );
 };
