@@ -9,7 +9,7 @@ body, ul, header, h1 {
 
 body {
   top: 0;
-  font-family: sans-serif;
+  font-family: 'Roboto', sans-serif ;
 }
 
 li {
@@ -18,36 +18,91 @@ li {
 
 header {
   width: 100%;
-  background-color: #64eaba;
-  padding: 18px 0;
+  background-color: #2e7d32;
+  color: #fff;
+  height: 53px;
+  line-height: 53px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 0 6px rgba(0,0,0,0.23);
+  margin-bottom: 20px;
+}
+
+.shelf {
+  margin-top: 20px;
 }
 
 .shelf h2 {
   text-align: left;
-  margin-left: 20px;
+  margin: 0 30px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
 }
 
 .book-list {
   display: flex;
   flex-wrap: wrap;
-  margin-top: 30px;
+  margin-top: 10px;
+  justify-content: flex-start;
+}
+
+.book-list li {
+  padding: 10px 30px;
 }
 
 .book {
-  margin: 10px 30px;
-  height: 250px;
+  width: 140px;
+}
+
+.book-top {
+  position: relative;
+  height: 200px;
+  display: -ms-flexbox;
   display: flex;
-  flex-basis: auto;
+  -ms-flex-align: end;
   align-items: flex-end;
+  margin-bottom: 10px;
 }
 
 .book-cover {
+  -webkit-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  background: #eee;
+  width: 93%;
   max-height: 200px;
 }
 
 .book-info {
-  height: 50px;
-  width: 200px;
+  font-size: 0.8em;
+  text-align: left;
+}
+
+.book-author {
+  color: #999;
+}
+
+.book-author p {
+  margin: 0;
+}
+
+.book-shelf-changer {
+  position: absolute;
+  right: 0;
+  bottom: -5px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #60ac5d;
+  background-image: url('./icons/arrow-down.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.book-shelf-changer select {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
 }
 
 .open-search {
@@ -70,6 +125,10 @@ header {
   font-size: 0;
 }
 
+.search .book-list{
+  margin-top: 40px;
+}
+
 .search-bar {
   padding: 0;
   position: fixed;
@@ -78,7 +137,6 @@ header {
   left: 0;
   z-index: 5;
   display: flex;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 0 6px rgba(0,0,0,0.23);
 }
 
 .search-bar form {
@@ -110,4 +168,10 @@ header {
   background-repeat: no-repeat;
   background-size: 28px;
   font-size: 0;
+}
+
+@media (max-width: 414px) {
+  .book-list {
+    justify-content: center;
+  }
 }

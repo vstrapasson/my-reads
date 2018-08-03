@@ -2,13 +2,13 @@ import React from 'react';
 
 const ShelfSelector = (props) => {
     return (
-      <div className="category-selector">
+      <div className="book-shelf-changer">
         <select
           onChange={(e) => {
             const { book, onChangeShelf } = props;
             onChangeShelf(book, e.target.value);
           }}
-          value={props.book.shelf}
+          value={props.book.shelf ? props.book.shelf : "none"}
         >
           <option disabled>Move to...</option>
           <option value="currentlyReading">Currently Reading</option>
