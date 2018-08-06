@@ -6,8 +6,6 @@ import _ from 'lodash';
 import ListBooks from './ListBooks';
 import Header from './Header';
 
-import * as API from '../utils/BooksAPI';
-
 class Home extends Component {
 
   state = {
@@ -15,25 +13,12 @@ class Home extends Component {
     loading: true
   }
 
-  componentDidMount() {
-      API.getAll().then(books => {
-          books = _.keyBy(books, 'id');
-          this.setState({books, loading: false});
-      });
-  }
-
   onChangeShelf(book, shelf) {
-    book.shelf = shelf;
-    this.setState((state) => {
-        state.books[book.id] = book;
-        return state;
-    });
-
-    API.update(book, shelf).then(res => console.log(res));
+      this.props.updateShelf(book, shelf);
   }
 
   render() {
-    let { books } = this.state;
+    let { books } = this.props;
 
     books = _.groupBy(books, 'shelf');
 

@@ -4,40 +4,26 @@ import queryString from 'query-string';
 import SearchBar from './SearchBar';
 import ListBooks from './ListBooks';
 
-import * as API from '../utils/BooksAPI';
-
 class Search extends Component {
 
   state = {
     query: '',
-    books: []
   }
 
   componentDidMount() {
-      const { search } = this.props.location;
+    const { search } = this.props.location;
+    let query = '';
 
-      if (!search) {
-        return;
-      }
+    if (search) {
+      query = queryString.parse(search).query;
+    }
 
-      const { query } = queryString.parse(search);
-      this.setState({query})
-      this.searchBooks(query);
+    this.setState({query})
+
+    this.props.searchBooks(query);
   }
 
-  searchBooks(query) {
-    API.search(query).then(books => {
-      if (!books) {
-        books = [];
-      }
-      if (books.error && books.error === "empty query") {
-        books = [];
-      }
-      this.setState({books, loading: false});
-    });
-  }
-
-  onSearch(e) {
+  handleSearch(e) {
     const query = e.target.value.trim();
     this.props.history.push({search: queryString.stringify({query})});
     this.setState({ query });
@@ -47,25 +33,22 @@ class Search extends Component {
       return;
     }
 
-    this.searchBooks(query);
+    this.props.searchBooks(query);
   }
 
   onChangeShelf(book, shelf) {
-    this.setState(state => {
-      const books = state.books.filter(b => b.id !== book.id)
-      return {books};
-    });
-
-    API.update(book, shelf).then(res => console.log(res))
+      this.props.updateShelf(book, shelf);
   }
 
-
-
   render() {
+    let { books } = this.props;
+
+    books = Object.values(books);
+
     return (
       <div className="search">
-        <SearchBar search={this.state.query} onSearch={this.onSearch.bind(this)} />
-        <ListBooks books={this.state.books} onChangeShelf={this.onChangeShelf.bind(this)} />
+        <SearchBar search={this.state.query} handleSearch={this.handleSearch.bind(this)} />
+        <ListBooks books={books} onChangeShelf={this.onChangeShelf.bind(this)} />
       </div>
     );
   }
