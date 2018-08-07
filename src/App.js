@@ -83,7 +83,6 @@ class App extends Component {
             <Route path="/search" render={ ({history, location}) => <Search location={location} history={history} books={this.state.searchBooks} searchBooks={this.searchBooks.bind(this)} updateShelf={this.updateShelf.bind(this)} />} />
           </Switch>
         </Router>
-
       </div>
     );
   }

@@ -25,13 +25,8 @@ class Search extends Component {
 
   handleSearch(e) {
     const query = e.target.value.trim();
-    this.props.history.push({search: queryString.stringify({query})});
+    this.props.history.replace({search: queryString.stringify({query})});
     this.setState({ query });
-
-    if (query === '') {
-      this.setState({books: []});
-      return;
-    }
 
     this.props.searchBooks(query);
   }
