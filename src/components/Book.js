@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 import ShelfSelector from './ShelfSelector';
 
-class Book extends Component {
+class Book extends PureComponent {
 
   render() {
     const { book } = this.props;

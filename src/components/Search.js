@@ -12,11 +12,7 @@ class Search extends Component {
 
   componentDidMount() {
     const { search } = this.props.location;
-    let query = '';
-
-    if (search) {
-      query = queryString.parse(search).query;
-    }
+    let query = search ? queryString.parse(search).query : '';
 
     this.setState({query})
 
@@ -42,8 +38,8 @@ class Search extends Component {
 
     return (
       <div className="search">
-        <SearchBar search={this.state.query} handleSearch={this.handleSearch.bind(this)} />
-        <ListBooks books={books} onChangeShelf={this.onChangeShelf.bind(this)} />
+        <SearchBar search={this.state.query} handleSearch={(e) => this.handleSearch(e)} />
+        <ListBooks books={books} onChangeShelf={(book, shelf) => this.onChangeShelf(book, shelf)} />
       </div>
     );
   }

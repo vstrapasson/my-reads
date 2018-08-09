@@ -8,7 +8,7 @@ import Search from './components/Search';
 
 import * as API from './utils/BooksAPI';
 
-import _ from 'lodash';
+import keyBy from 'lodash/fp/keyBy';
 
 class App extends Component {
 
@@ -17,31 +17,25 @@ class App extends Component {
     searchBooks: []
   }
 
-  componentDidMount() {
-    this.getAllBooks();
-  }
-
-  getAllBooks() {
-     API.getAll()
-      .then(books => {
-        books = _.keyBy(books, 'id');
-        this.setState({ books });
-      });
+  async componentDidMount() {
+    const books = keyBy('id')( await API.getAll() );
+    this.setState({ books });
   }
 
   updateShelf(book, shelf) {
-    const { books } = this.state;
+    API.update(book, shelf);
 
-    books[book.id]  = {
-      ...book,
-      shelf
-    };
+    book.shelf = shelf;
+
     this.setState(prevState => {
-      prevState.searchBooks[book.id] = books[book.id];
-      return {books, searchBooks: prevState.searchBooks};
-    });
+        let books = Object.values(prevState.books);
+        books = books.filter(b => b.id !== book.id).concat(book);
+        books = keyBy('id')(books);
 
-    API.update(book, shelf).then(res => console.log(res))
+        prevState.searchBooks[book.id] = books[book.id];
+
+        return {books, searchBooks: prevState.searchBooks};
+    });
   }
 
   searchBooks(query) {
@@ -68,7 +62,7 @@ class App extends Component {
           return book;
       });
 
-      searchBooks = _.keyBy(searchBooks, 'id');
+      searchBooks = keyBy('id')(searchBooks);
 
       this.setState({searchBooks});
     });
@@ -79,8 +73,8 @@ class App extends Component {
       <div className="App">
         <Router>
           <Switch>
-            <Route exact path="/" component={ _ => <Home books={this.state.books} updateShelf={this.updateShelf.bind(this)} />} />
-            <Route path="/search" render={ ({history, location}) => <Search location={location} history={history} books={this.state.searchBooks} searchBooks={this.searchBooks.bind(this)} updateShelf={this.updateShelf.bind(this)} />} />
+            <Route exact path="/" component={ _ => <Home books={this.state.books} updateShelf={(book, shelf) => this.updateShelf(book, shelf)} />} />
+            <Route path="/search" render={ ({history, location}) => <Search location={location} history={history} books={this.state.searchBooks} searchBooks={query => this.searchBooks(query)} updateShelf={(book, shelf) => this.updateShelf(book, shelf)} />} />
           </Switch>
         </Router>
       </div>
